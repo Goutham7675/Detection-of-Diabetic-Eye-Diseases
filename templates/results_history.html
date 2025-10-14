@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results History - EyeCare AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+  <style>
+    /* Results History Page Styles */
+    .history-page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 0 1rem;
+    }
+
+    .page-header {
+      margin-bottom: 1.5rem;
+      text-align: center;
+      animation: fadeIn 0.8s ease-out;
+      padding-top: 0.5rem;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #4f46e5, #8b5cf6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      position: relative;
+    }
+
+    /* Results Filter Section */
+    .filter-section {
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .filter-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .filter-button {
+      padding: 0.4rem 0.8rem;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(30, 41, 59, 0.4);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.85rem;
+    }
+
+    .filter-button:hover, .filter-button.active {
+      background: rgba(79, 70, 229, 0.2);
+      border-color: rgba(79, 70, 229, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .filter-button.active {
+      background: rgba(79, 70, 229, 0.4);
+      border-color: #4f46e5;
+    }
+
+    /* Results Group Section */
+    .results-group {
+      margin-bottom: 1rem;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    /* Horizontal date group layout */
+    .group-header {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      padding: 0.25rem 0.5rem;
+      background: rgba(30, 41, 59, 0.6);
+      border-radius: 8px;
+      margin-right: 0.5rem;
+    }
+
+    .group-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-white);
+      margin: 0;
+    }
+
+    .badge-count {
+      background: rgba(79, 70, 229, 0.2);
+      color: #8b5cf6;
+      border-radius: 50px;
+      padding: 0.15rem 0.5rem;
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
+    }
+
+    /* Results Grid */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Result Card */
+    .result-card {
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .result-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .result-image {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      object-position: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .result-content {
+      padding: 0.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .result-info {
+      margin-bottom: 0.5rem;
+      flex: 1;
+    }
+
+    .result-date {
+      font-size: 0.8rem;
+      color: var(--color-gray-400);
+      margin-bottom: 0.25rem;
+    }
+
+    .result-type {
+      margin-bottom: 0.5rem;
+    }
+
+    .result-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.75rem;
+    }
+
+    .normal .result-badge {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+    }
+
+    .abnormal .result-badge {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .accuracy-label {
+      font-size: 0.7rem;
+      color: var(--color-gray-400);
+      margin-bottom: 0.15rem;
+    }
+
+    .accuracy-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #4f46e5;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+
+    .btn-action {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      padding: 0.35rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-view {
+      background: rgba(79, 70, 229, 0.1);
+      border: 1px solid rgba(79, 70, 229, 0.3);
+      color: #8b5cf6;
+    }
+
+    .btn-view:hover {
+      background: rgba(79, 70, 229, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-download {
+      background: rgba(37, 99, 235, 0.1);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      color: #60a5fa;
+    }
+
+    .btn-download:hover {
+      background: rgba(37, 99, 235, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      color: var(--color-gray-400);
+      margin-bottom: 0.75rem;
+    }
+
+    .empty-state-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.35rem;
+      color: var(--color-white);
+    }
+
+    .empty-state-description {
+      color: var(--color-gray-300);
+      margin-bottom: 1rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 0.9rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #4f46e5, #8b5cf6);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(79, 70, 229, 0.3);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Filter animation */
+    .hidden-result {
+      display: none;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+      gap: 0.25rem;
+    }
+
+    .pagination-button {
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(30, 41, 59, 0.4);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.8rem;
+    }
+
+    .pagination-button:hover, .pagination-button.active {
+      background: rgba(79, 70, 229, 0.2);
+      border-color: rgba(79, 70, 229, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .pagination-button.active {
+      background: rgba(79, 70, 229, 0.4);
+      border-color: #4f46e5;
+    }
+
+    .pagination-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    /* Horizontal date groups container */
+    .date-groups-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</head>
+<body class="bg-trueblack text-babypowder">
+  <!-- Particles Background -->
+  <div class="particles-container">
+    <div id="particles"></div>
+  </div>
+
+  <!-- Include the header from base.html -->
+  {% include 'header.html' %}
+
+  <main class="history-page">
+    <div class="container">
+      <div class="page-header">
+        <h1>Results <span class="gradient-text">History</span></h1>
+        <p>View all your previous eye analysis results</p>
+      </div>
+
+      <!-- Filter Section -->
+      <div class="filter-section">
+        <h2>Filter Results</h2>
+        <div class="filter-options">
+          <button class="filter-button active" data-filter="all">All Results</button>
+          <button class="filter-button" data-filter="normal">Normal</button>
+          <button class="filter-button" data-filter="cataract">Cataract</button>
+          <button class="filter-button" data-filter="glaucoma">Glaucoma</button>
+          <button class="filter-button" data-filter="DR">Diabetic Retinopathy</button>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      {% if results %}
+        <!-- Display all date groups horizontally first -->
+        <div class="date-groups-container">
+        {% set seen_groups = [] %}
+        {% for result in results %}
+          {% if result.date_group not in seen_groups %}
+            <div class="group-header" data-group="{{ result.date_group }}">
+              <h3 class="group-title">{{ result.date_group }}</h3>
+              <span class="badge-count">{{ results|selectattr('date_group', 'equalto', result.date_group)|list|length }}</span>
+            </div>
+            {% set _ = seen_groups.append(result.date_group) %}
+          {% endif %}
+        {% endfor %}
+        </div>
+
+        <!-- All results in a single grid -->
+        <div class="results-grid">
+        {% for result in results %}
+          <!-- Result Card -->
+          <div class="result-card" data-result-type="{{ result.prediction }}" data-date-group="{{ result.date_group }}">
+            <img src="{{ url_for('static', filename=result.image_path.replace('static/', '')) }}" alt="Retinal scan" class="result-image">
+            <div class="result-content">
+              <div class="result-info">
+                <div class="result-date">{{ result.timestamp.strftime('%B %d, %Y at %I:%M %p') }}</div>
+                <div class="result-type {% if result.prediction == 'normal' %}normal{% else %}abnormal{% endif %}">
+                  <span class="result-badge">{{ result.prediction|upper }}</span>
+                </div>
+                <div class="accuracy-label">AI Analysis Accuracy</div>
+                <div class="accuracy-value">{{ '%.2f'|format(result.confidence * 100) }}%</div>
+              </div>
+              <div class="result-actions">
+                <a href="{{ url_for('download_report', result_id=result.id) }}" class="btn-action btn-download">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+                  PDF Report
+                </a>
+                <a href="#" class="btn-action btn-view">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                  View Details
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+          <button class="pagination-button" id="prev-page" disabled>Previous</button>
+          <div id="page-numbers"></div>
+          <button class="pagination-button" id="next-page">Next</button>
+        </div>
+      {% else %}
+        <!-- Empty State -->
+        <div class="empty-state">
+          <div class="empty-state-icon">📊</div>
+          <h2 class="empty-state-title">No Results Yet</h2>
+          <p class="empty-state-description">You haven't analyzed any eye images yet. Upload an image to get started!</p>
+          <a href="{{ url_for('upload_file') }}" class="btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" x2="12" y1="3" y2="15"></line></svg>
+            Upload an Image
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </main>
+
+  <!-- Include the footer from base.html -->
+  {% include 'footer.html' %}
+
+  <!-- JavaScript for Filtering and Pagination -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Filtering
+      const filterButtons = document.querySelectorAll('.filter-button');
+      const resultCards = document.querySelectorAll('.result-card');
+      const dateGroups = document.querySelectorAll('.group-header');
+      
+      // Initialize pagination
+      const itemsPerPage = 12;
+      let currentPage = 1;
+      let filteredItems = Array.from(resultCards);
+      
+      // Filter functionality
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const filter = this.dataset.filter;
+          
+          // Update active button state
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Filter the results
+          if (filter === 'all') {
+            filteredItems = Array.from(resultCards);
+            resultCards.forEach(card => card.classList.remove('hidden-result'));
+            
+            // Show all date groups
+            dateGroups.forEach(group => {
+              group.style.display = 'inline-flex';
+            });
+          } else {
+            filteredItems = Array.from(resultCards).filter(card => {
+              const resultType = card.dataset.resultType;
+              return resultType === filter;
+            });
+            
+            resultCards.forEach(card => {
+              if (card.dataset.resultType === filter) {
+                card.classList.remove('hidden-result');
+              } else {
+                card.classList.add('hidden-result');
+              }
+            });
+            
+            // Only show date groups that have visible results
+            const visibleDateGroups = new Set();
+            filteredItems.forEach(item => {
+              visibleDateGroups.add(item.dataset.dateGroup);
+            });
+            
+            dateGroups.forEach(group => {
+              if (visibleDateGroups.has(group.dataset.group)) {
+                group.style.display = 'inline-flex';
+              } else {
+                group.style.display = 'none';
+              }
+            });
+          }
+          
+          // Reset pagination to first page after filtering
+          currentPage = 1;
+          updatePagination();
+          showPage(currentPage);
+        });
+      });
+      
+      // Pagination
+      const prevPageBtn = document.getElementById('prev-page');
+      const nextPageBtn = document.getElementById('next-page');
+      const pageNumbers = document.getElementById('page-numbers');
+      
+      function updatePagination() {
+        const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+        
+        // Disable/enable prev/next buttons
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+        
+        // Generate page number buttons
+        pageNumbers.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+          const pageBtn = document.createElement('button');
+          pageBtn.className = 'pagination-button' + (i === currentPage ? ' active' : '');
+          pageBtn.textContent = i;
+          pageBtn.addEventListener('click', () => {
+            currentPage = i;
+            updatePagination();
+            showPage(currentPage);
+          });
+          pageNumbers.appendChild(pageBtn);
+        }
+      }
+      
+      function showPage(page) {
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        
+        filteredItems.forEach((item, index) => {
+          if (index >= startIndex && index < endIndex) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      }
+      
+      // Previous page button
+      prevPageBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          updatePagination();
+          showPage(currentPage);
+        }
+      });
+      
+      // Next page button
+      nextPageBtn.addEventListener('click', () => {
+        const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          updatePagination();
+          showPage(currentPage);
+        }
+      });
+      
+      // Initialize pagination
+      updatePagination();
+      showPage(currentPage);
+      
+      // Date group filtering
+      dateGroups.forEach(group => {
+        group.addEventListener('click', function() {
+          const groupName = this.dataset.group;
+          
+          // Reset filter buttons
+          filterButtons.forEach(btn => {
+            if(btn.dataset.filter === 'all') {
+              btn.classList.add('active');
+            } else {
+              btn.classList.remove('active');
+            }
+          });
+          
+          // Show only cards from this date group
+          resultCards.forEach(card => {
+            if(card.dataset.dateGroup === groupName) {
+              card.classList.remove('hidden-result');
+              card.style.display = '';
+            } else {
+              card.classList.add('hidden-result');
+              card.style.display = 'none';
+            }
+          });
+          
+          // Update filtered items
+          filteredItems = Array.from(resultCards).filter(card => 
+            card.dataset.dateGroup === groupName
+          );
+          
+          // Reset pagination
+          currentPage = 1;
+          updatePagination();
+          showPage(currentPage);
+        });
+      });
+    });
+  </script>
+</body>
+</html> 

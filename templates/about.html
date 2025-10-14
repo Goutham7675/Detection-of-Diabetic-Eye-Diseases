@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - EyeCare AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/about.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/hero-geometric.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <style>
+    /* Animations for gradient effects */
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* Digital Vision gradient text styling */
+    .gradient-text {
+        font-family: 'Dancing Script', cursive;
+        background: linear-gradient(90deg, #9C27B0, #F48FB1, #7986CB);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradientShift 8s ease infinite;
+        display: inline-block;
+        font-weight: 700;
+    }
+    
+    /* Different size variants */
+    .gradient-text.xl {
+        font-size: 3.5rem;
+    }
+    
+    .gradient-text.lg {
+        font-size: 2.5rem;
+    }
+    
+    .gradient-text.md {
+        font-size: 2rem;
+    }
+    
+    .gradient-text.sm {
+        font-size: 1.5rem;
+    }
+    
+    /* CTA section styling */
+    .cta-section {
+        padding: 4rem 0;
+        text-align: center;
+    }
+    
+    .cta-content h2 {
+        color: var(--text-color);
+        margin-bottom: 1rem;
+    }
+    
+    .cta-content p {
+        color: var(--text-color);
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+    
+    /* Light theme override */
+    [data-theme="light"] .cta-content h2,
+    [data-theme="light"] .cta-content p {
+        color: #212121;
+    }
+  </style>
+</head>
+<body class="bg-trueblack text-babypowder">
+  <!-- Particles Background -->
+  <div class="particles-container">
+    <div id="particles"></div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header class="main-nav">
+    <div class="container">
+      <div class="nav-content">
+        <div class="logo">
+          <a href="{{ url_for('index') }}">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>EyeCare AI</span>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+          <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+          <a href="{{ url_for('upload_file') }}" class="nav-link">Upload</a>
+          <a href="{{ url_for('feedback') }}" class="nav-link">Feedback</a>
+          <a href="{{ url_for('about') }}" class="nav-link active">About</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="{{ url_for('login') }}" class="btn-outline">Login</a>
+          <a href="{{ url_for('register') }}" class="btn-primary">Sign Up</a>
+          <div class="theme-toggle-container">
+            <input type="checkbox" id="toggle" class="theme-toggle">
+            <label for="toggle" class="toggle-label">
+              <span class="toggle-icon light-icon">☀️</span>
+              <span class="toggle-icon dark-icon">🌙</span>
+            </label>
+          </div>
+          <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="container">
+        <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+        <a href="{{ url_for('upload_file') }}" class="nav-link">Upload</a>
+        <a href="{{ url_for('feedback') }}" class="nav-link">Feedback</a>
+        <a href="{{ url_for('about') }}" class="nav-link active">About</a>
+        <div class="mobile-actions">
+          <a href="{{ url_for('login') }}" class="btn-outline">Login</a>
+          <a href="{{ url_for('register') }}" class="btn-primary">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- About Hero Section with Geometric Background -->
+    <section class="hero-geometric">
+      <!-- Geometric Shapes Background -->
+      <div class="geometric-background">
+        <div class="geometric-shape shape-1"></div>
+        <div class="geometric-shape shape-2"></div>
+        <div class="geometric-shape shape-3"></div>
+        <div class="geometric-shape shape-4"></div>
+        <div class="grid-overlay"></div>
+      </div>
+
+      <div class="hero-content-wrapper">
+        <div class="hero-badge">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span>About Us</span>
+        </div>
+
+        <h1 class="hero-title">Our <span class="gradient-text lg">Mission</span></h1>
+        
+        <p class="hero-subtitle">
+          Making eye disease detection accessible to everyone through advanced AI
+        </p>
+      </div>
+
+      <div class="scroll-indicator">
+        <span class="scroll-text">Learn more</span>
+        <div class="scroll-arrow">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Mission Section with 3D Interactive Component -->
+    <section class="about-mission">
+      <div class="container">
+        <div class="mission-content">
+          <div class="mission-text">
+            <h2 class="section-title">Our <span class="gradient-text md">Mission</span></h2>
+            <h3 class="mission-heading">Making Eye Health Accessible</h3>
+            <p class="mission-description">
+              At EyeCare AI, we believe that everyone deserves access to reliable eye health screening, regardless of location or resources. Our advanced AI technology makes it possible to detect early signs of eye diseases, potentially saving vision when early intervention is crucial.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Join Us in Our <span class="gradient-text md">Mission</span></h2>
+          <p>Help us make early eye disease detection accessible to everyone</p>
+          <div class="cta-buttons">
+            <a href="{{ url_for('register') }}" class="btn-primary">Create Account</a>
+            <a href="{{ url_for('contact') }}" class="btn-outline">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <a href="{{ url_for('index') }}" class="footer-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>EyeCare AI</span>
+          </a>
+          <p>Advanced eye disease detection using artificial intelligence</p>
+        </div>
+        <div class="footer-links">
+          <a href="{{ url_for('about') }}">About</a>
+          <a href="{{ url_for('technology') }}">Technology</a>
+          <a href="{{ url_for('privacy') }}">Privacy</a>
+          <a href="{{ url_for('terms') }}">Terms</a>
+          <a href="{{ url_for('contact') }}">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> EyeCare AI. All rights reserved.</p>
+        <p>Made with ❤️ for better eye health</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script>
+    // Set current year in the footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('toggle');
+    const htmlElement = document.documentElement;
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    themeToggle.checked = savedTheme === 'light';
+    
+    // Toggle theme when switch is clicked
+    themeToggle.addEventListener('change', function() {
+      if(this.checked) {
+        htmlElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html> 

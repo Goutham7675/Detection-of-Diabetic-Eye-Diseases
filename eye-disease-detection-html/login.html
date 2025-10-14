@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - EyeCare AI</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/auth.css">
+</head>
+<body class="bg-trueblack text-babypowder">
+  <!-- Particles Background -->
+  <div class="particles-container">
+    <div id="particles"></div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header class="main-nav">
+    <div class="container">
+      <div class="nav-content">
+        <div class="logo">
+          <a href="index.html">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>EyeCare AI</span>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="upload.html" class="nav-link">Upload</a>
+          <a href="feedback.html" class="nav-link">Feedback</a>
+          <a href="about.html" class="nav-link">About</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="login.html" class="btn-outline active">Login</a>
+          <a href="register.html" class="btn-primary">Sign Up</a>
+          <div class="theme-toggle-container">
+            <input type="checkbox" id="toggle" class="theme-toggle">
+            <label for="toggle" class="toggle-label">
+              <span class="toggle-icon light-icon">☀️</span>
+              <span class="toggle-icon dark-icon">🌙</span>
+            </label>
+          </div>
+          <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="container">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="upload.html" class="nav-link">Upload</a>
+        <a href="feedback.html" class="nav-link">Feedback</a>
+        <a href="about.html" class="nav-link">About</a>
+        <div class="mobile-actions">
+          <a href="login.html" class="btn-outline active">Login</a>
+          <a href="register.html" class="btn-primary">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="auth-page">
+    <div class="container">
+      <div class="auth-container">
+        <div class="auth-card">
+          <div class="auth-header">
+            <h1>Welcome Back</h1>
+            <p>Sign in to your account to continue</p>
+          </div>
+
+          <form id="login-form" class="auth-form">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <div class="input-container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="label-row">
+                <label for="password">Password</label>
+                <a href="#" class="forgot-link">Forgot Password?</a>
+              </div>
+              <div class="input-container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+              </div>
+            </div>
+
+            <div class="remember-me">
+              <label class="checkbox-container">
+                <input type="checkbox" id="remember" name="remember">
+                <span class="checkmark"></span>
+                <span class="label-text">Remember me</span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn-primary btn-full">Sign In</button>
+
+            <div class="auth-footer">
+              <p>Don't have an account? <a href="register.html">Sign Up</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="current-year"></span> EyeCare AI. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/particles.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    
+    // Theme toggle functionality
+    const htmlElement = document.documentElement;
+    const themeToggle = document.getElementById('toggle');
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    
+    // Set the toggle to checked if theme is light
+    if (savedTheme === 'light') {
+      themeToggle.checked = true;
+    }
+    
+    // Add event listener to toggle
+    themeToggle.addEventListener('change', function() {
+      if (this.checked) {
+        htmlElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html> 

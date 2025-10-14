@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - EyeCare AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/hero-geometric.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <style>
+    /* Animations */
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0.7; transform: scale(1); }
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -100% 0; }
+      100% { background-position: 200% 0; }
+    }
+    
+    /* Gradient text styling */
+    .gradient-text {
+      font-family: 'Dancing Script', cursive;
+      background: linear-gradient(90deg, #9C27B0, #F48FB1, #7986CB);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 8s ease infinite;
+      display: inline-block;
+      font-weight: 700;
+      font-size: 2.2rem;
+      margin-top: 0.5rem;
+    }
+    
+    .hero-title {
+      font-size: 2.8rem;
+      margin-bottom: 0.2rem;
+    }
+    
+    /* Enhanced geometric shapes styling */
+    .geometric-shape {
+      position: absolute;
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      background: linear-gradient(45deg, var(--color-primary), var(--color-primary-light));
+      opacity: 0.2;
+      filter: blur(40px);
+      z-index: -1;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .shape-1 {
+      width: 350px;
+      height: 350px;
+      top: -100px;
+      left: -150px;
+      animation-delay: 0s;
+      background: linear-gradient(45deg, #4158D0, #C850C0);
+    }
+    
+    .shape-2 {
+      width: 400px;
+      height: 400px;
+      bottom: -150px;
+      right: -100px;
+      animation-delay: 2s;
+      background: linear-gradient(45deg, #0093E9, #80D0C7);
+    }
+    
+    .shape-3 {
+      width: 200px;
+      height: 200px;
+      top: 30%;
+      right: 20%;
+      animation-delay: 1s;
+      animation-duration: 10s;
+      background: linear-gradient(45deg, #8EC5FC, #E0C3FC);
+    }
+    
+    .shape-4 {
+      width: 250px;
+      height: 250px;
+      bottom: 20%;
+      left: 15%;
+      animation-delay: 3s;
+      animation-duration: 12s;
+      background: linear-gradient(45deg, #FBAB7E, #F7CE68);
+    }
+    
+    /* Contact page styles */
+    .contact-page {
+      padding: 6rem 0;
+      background-color: var(--color-black-900);
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.5s ease;
+    }
+    
+    .contact-page::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at bottom left, rgba(var(--color-primary-rgb), 0.08), transparent 60%);
+      pointer-events: none;
+    }
+
+    .contact-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .contact-form-container,
+    .contact-info-container {
+      background-color: rgba(var(--color-rich-black-rgb), 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      border: 1px solid rgba(var(--color-gray-700-rgb), 0.3);
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    .contact-title {
+      font-size: 1.75rem;
+      color: var(--color-babypowder);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      transition: color 0.5s ease;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--color-gray-300);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.5s ease;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background-color: rgba(var(--color-black-900-rgb), 0.5);
+      border: 1px solid rgba(var(--color-gray-700-rgb), 0.3);
+      border-radius: 0.5rem;
+      color: var(--color-babypowder);
+      font-size: 1rem;
+      transition: all 0.3s ease, background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--color-gray-500);
+    }
+
+    .form-textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.875rem 2rem;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .form-submit::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 3s infinite;
+      z-index: 1;
+    }
+    
+    .form-submit span,
+    .form-submit svg {
+      position: relative;
+      z-index: 2;
+    }
+
+    .form-submit:hover {
+      background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.3);
+    }
+
+    .contact-info-list {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .contact-info-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .contact-info-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background-color: rgba(var(--color-primary-rgb), 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+      flex-shrink: 0;
+      border: 1px solid rgba(var(--color-primary-rgb), 0.2);
+      transition: transform 0.3s ease, background-color 0.5s ease;
+    }
+    
+    .contact-info-item:hover .contact-info-icon {
+      transform: scale(1.1);
+    }
+
+    .contact-info-content {
+      flex: 1;
+    }
+
+    .contact-info-label {
+      font-weight: 600;
+      color: var(--color-gray-300);
+      margin-bottom: 0.5rem;
+      transition: color 0.5s ease;
+    }
+
+    .contact-info-value {
+      color: var(--color-babypowder);
+      line-height: 1.5;
+      transition: color 0.5s ease;
+    }
+
+    .contact-info-value a {
+      color: var(--color-babypowder);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info-value a:hover {
+      color: var(--color-primary);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .social-link {
+      width: 2.5rem;
+      height: 2.5rem;
+      background-color: rgba(var(--color-black-900-rgb), 0.5);
+      border: 1px solid rgba(var(--color-gray-700-rgb), 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gray-300);
+      transition: all 0.3s ease, background-color 0.5s ease;
+    }
+
+    .social-link:hover {
+      background-color: var(--color-primary);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.2);
+    }
+
+    .map-container {
+      margin-top: 2rem;
+      background-color: rgba(var(--color-black-900-rgb), 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 0.5rem;
+      border: 1px solid rgba(var(--color-gray-700-rgb), 0.3);
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      transition: border-color 0.5s ease;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    /* Enhanced light theme */
+    html[data-theme="light"] {
+      --light-bg-color: #f8f9fa;
+      --light-card-bg: rgba(255, 255, 255, 0.9);
+      --light-card-border: rgba(230, 230, 230, 0.7);
+      --light-text-color: #2d3748;
+      --light-accent-color: #4f46e5;
+    }
+    
+    html[data-theme="light"] .contact-page {
+      background-color: var(--light-bg-color);
+      background-image: 
+        linear-gradient(135deg, rgba(240, 249, 255, 0.6) 0%, rgba(214, 240, 253, 0.6) 100%),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234299e1' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    }
+    
+    html[data-theme="light"] .contact-page::before {
+      background: radial-gradient(circle at bottom left, rgba(79, 70, 229, 0.1), transparent 70%);
+    }
+    
+    html[data-theme="light"] .contact-form-container,
+    html[data-theme="light"] .contact-info-container {
+      background-color: var(--light-card-bg);
+      border: 1px solid var(--light-card-border);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    
+    html[data-theme="light"] .contact-title {
+      color: var(--light-text-color);
+    }
+    
+    html[data-theme="light"] .form-input,
+    html[data-theme="light"] .form-textarea {
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(203, 213, 224, 0.7);
+      color: var(--light-text-color);
+    }
+    
+    html[data-theme="light"] .form-input::placeholder,
+    html[data-theme="light"] .form-textarea::placeholder {
+      color: #a0aec0;
+    }
+    
+    html[data-theme="light"] .form-label {
+      color: #4a5568;
+    }
+    
+    html[data-theme="light"] .form-submit {
+      background: linear-gradient(135deg, var(--light-accent-color), #6366f1);
+    }
+    
+    html[data-theme="light"] .form-submit:hover {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+    
+    html[data-theme="light"] .contact-info-icon {
+      background-color: rgba(79, 70, 229, 0.1);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      color: var(--light-accent-color);
+    }
+    
+    html[data-theme="light"] .contact-info-label {
+      color: #4a5568;
+    }
+    
+    html[data-theme="light"] .contact-info-value,
+    html[data-theme="light"] .contact-info-value a {
+      color: var(--light-text-color);
+    }
+    
+    html[data-theme="light"] .social-link {
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(203, 213, 224, 0.5);
+      color: #4a5568;
+    }
+    
+    html[data-theme="light"] .social-link:hover {
+      background-color: var(--light-accent-color);
+      color: white;
+      border-color: var(--light-accent-color);
+    }
+    
+    html[data-theme="light"] .map-container {
+      border: 1px solid rgba(203, 213, 224, 0.7);
+    }
+
+    /* Media Queries */
+    @media (min-width: 768px) {
+      .form-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .contact-grid {
+        grid-template-columns: 3fr 2fr;
+      }
+
+      .form-submit {
+        width: auto;
+      }
+    }
+
+    /* Flash Message Styles */
+    .flash-messages {
+      margin: 1rem auto;
+      max-width: 1200px;
+    }
+    
+    .flash-message {
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .flash-message.success {
+      background-color: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10b981;
+    }
+    
+    .flash-message.error {
+      background-color: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+    
+    .flash-message p {
+      margin: 0;
+    }
+    
+    .close-button {
+      background: none;
+      border: none;
+      color: inherit;
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0;
+      margin-left: 1rem;
+    }
+
+    /* Add this new style to ensure text is visible in both themes */
+    .feedback-question {
+      color: var(--text-color);
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    /* Light theme specific overrides */
+    [data-theme="light"] .feedback-question {
+      color: #212121;
+    }
+  </style>
+</head>
+<body class="bg-trueblack text-babypowder">
+  <!-- Particles Background -->
+  <div class="particles-container">
+    <div id="particles"></div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header class="main-nav">
+    <div class="container">
+      <div class="nav-content">
+        <div class="logo">
+          <a href="{{ url_for('index') }}">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>EyeCare AI</span>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+          <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+          <a href="{{ url_for('upload_file') }}" class="nav-link">Upload</a>
+          <a href="{{ url_for('feedback') }}" class="nav-link">Feedback</a>
+          <a href="{{ url_for('about') }}" class="nav-link">About</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="{{ url_for('login') }}" class="btn-outline">Login</a>
+          <a href="{{ url_for('register') }}" class="btn-primary">Sign Up</a>
+          <div class="theme-toggle-container">
+            <input type="checkbox" id="toggle" class="theme-toggle">
+            <label for="toggle" class="toggle-label">
+              <span class="toggle-icon light-icon">☀️</span>
+              <span class="toggle-icon dark-icon">🌙</span>
+            </label>
+          </div>
+          <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="container">
+        <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+        <a href="{{ url_for('upload_file') }}" class="nav-link">Upload</a>
+        <a href="{{ url_for('feedback') }}" class="nav-link">Feedback</a>
+        <a href="{{ url_for('about') }}" class="nav-link">About</a>
+        <div class="mobile-actions">
+          <a href="{{ url_for('login') }}" class="btn-outline">Login</a>
+          <a href="{{ url_for('register') }}" class="btn-primary">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages container">
+          {% for category, message in messages %}
+            <div class="flash-message {{ category }}">
+              <p>{{ message }}</p>
+              <button class="close-button">&times;</button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Hero Section -->
+    <section class="hero-geometric mini">
+      <!-- Geometric Shapes Background -->
+      <div class="geometric-background">
+        <div class="geometric-shape shape-1"></div>
+        <div class="geometric-shape shape-2"></div>
+        <div class="geometric-shape shape-3"></div>
+        <div class="geometric-shape shape-4"></div>
+        <div class="grid-overlay"></div>
+      </div>
+
+      <div class="hero-content-wrapper">
+        <div class="hero-badge">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span>Get in Touch</span>
+        </div>
+
+        <h1 class="hero-title">Contact <span class="gradient-text">Us</span></h1>
+        
+        <p class="hero-subtitle">
+          Have questions or feedback? We'd love to hear from you!
+        </p>
+      </div>
+    </section>
+
+    <section class="contact-page">
+      <div class="contact-container">
+        <div class="contact-grid">
+          <!-- Contact Form -->
+          <div class="contact-form-container">
+            <h2 class="contact-title">Send Us a Message</h2>
+            <p class="feedback-question">Have questions or feedback? We'd love to hear from you!</p>
+            <form class="contact-form" id="contactForm" action="{{ url_for('contact') }}" method="POST">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name" class="form-label">Full Name</label>
+                  <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                  <label for="email" class="form-label">Email Address</label>
+                  <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="subject" class="form-label">Subject</label>
+                <input type="text" id="subject" name="subject" class="form-input" placeholder="What is this about?">
+              </div>
+              <div class="form-group">
+                <label for="message" class="form-label">Message</label>
+                <textarea id="message" name="message" class="form-textarea" placeholder="Please type your message here..." required></textarea>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="form-submit">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+                  <span style="margin-left: 0.5rem;">Send Message</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="contact-info-container">
+            <h2 class="contact-title">Contact Information</h2>
+            <p style="color: var(--color-gray-300); margin-bottom: 1.5rem;">
+              Reach out to us with any questions, feedback, or partnership inquiries. Our team is here to help!
+            </p>
+            
+            <div class="contact-info-list">
+              <div class="contact-info-item">
+                <div class="contact-info-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </div>
+                <div class="contact-info-content">
+                  <div class="contact-info-label">Phone</div>
+                  <div class="contact-info-value">
+                    <a href="tel:+917842577259">+91 7842577259</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-info-item">
+                <div class="contact-info-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </div>
+                <div class="contact-info-content">
+                  <div class="contact-info-label">Email</div>
+                  <div class="contact-info-value">
+                    <a href="mailto:rohithsai299@gmail.com">rohithsai299@gmail.com</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-info-item">
+                <div class="contact-info-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </div>
+                <div class="contact-info-content">
+                  <div class="contact-info-label">Office Location</div>
+                  <div class="contact-info-value">
+                    GRIET College<br>
+                    Hyderabad<br>
+                    Telangana, India
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <a href="#" class="social-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </a>
+              <a href="#" class="social-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84 0 0 0 .497-3.753C20.18 7.773 21.692 5.25 22 4.009z"></path></svg>
+              </a>
+              <a href="#" class="social-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              </a>
+              <a href="#" class="social-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              </a>
+            </div>
+
+            <div class="map-container">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.633785351055!2d78.43140217443675!3d17.4938146799204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9b0dd9fbfad5%3A0x17bf31bf97f59bae!2sGokaraju%20Rangaraju%20Institute%20of%20Engineering%20and%20Technology!5e0!3m2!1sen!2sin!4v1682420356129!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <a href="{{ url_for('index') }}" class="footer-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>EyeCare AI</span>
+          </a>
+          <p>Advanced eye disease detection using artificial intelligence</p>
+        </div>
+        <div class="footer-links">
+          <a href="{{ url_for('about') }}">About</a>
+          <a href="{{ url_for('technology') }}">Technology</a>
+          <a href="{{ url_for('privacy') }}">Privacy</a>
+          <a href="{{ url_for('terms') }}">Terms</a>
+          <a href="{{ url_for('contact') }}">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> EyeCare AI. All rights reserved.</p>
+        <p>Made with ❤️ for better eye health</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    
+    // Form validation without preventing submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      
+      if (name.trim() === '' || email.trim() === '' || message.trim() === '') {
+        e.preventDefault();
+        alert('Please fill out all required fields.');
+        return;
+      }
+    });
+    
+    // Close flash messages when the close button is clicked
+    document.querySelectorAll('.close-button').forEach(button => {
+      button.addEventListener('click', function() {
+        this.parentElement.style.display = 'none';
+      });
+    });
+    
+    // Theme toggle functionality
+    const htmlElement = document.documentElement;
+    const themeToggle = document.getElementById('toggle');
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    
+    // Set the toggle to checked if theme is light
+    if (savedTheme === 'light') {
+      themeToggle.checked = true;
+    }
+    
+    // Add event listener to toggle
+    themeToggle.addEventListener('change', function() {
+      if (this.checked) {
+        htmlElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html> 

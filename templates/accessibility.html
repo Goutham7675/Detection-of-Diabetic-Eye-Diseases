@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Accessibility - EyeCare AI{% endblock %}
+
+{% block styles %}
+<style>
+    .accessibility-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+    
+    .accessibility-heading {
+        margin-bottom: 2rem;
+        color: var(--primary-color);
+    }
+    
+    .accessibility-section {
+        margin-bottom: 2.5rem;
+    }
+    
+    .accessibility-section h2 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+    
+    .accessibility-section ul {
+        margin-left: 1.5rem;
+    }
+    
+    .accessibility-section li {
+        margin-bottom: 0.75rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="accessibility-container">
+    <h1 class="accessibility-heading">Accessibility Statement</h1>
+    
+    <div class="accessibility-section">
+        <p>EyeCare AI is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience for everyone and applying the relevant accessibility standards.</p>
+    </div>
+    
+    <div class="accessibility-section">
+        <h2>Measures to Support Accessibility</h2>
+        <p>EyeCare AI takes the following measures to ensure accessibility:</p>
+        <ul>
+            <li>Use of semantic HTML throughout our website</li>
+            <li>Implementation of ARIA attributes when necessary</li>
+            <li>Keyboard navigation support for all interactive elements</li>
+            <li>Color contrast that meets WCAG AA standards</li>
+            <li>Text resizing without loss of content or functionality</li>
+            <li>Alternative text for all informative images</li>
+            <li>Clear and consistent navigation</li>
+            <li>Dark and light mode themes to accommodate different visual preferences</li>
+        </ul>
+    </div>
+    
+    <div class="accessibility-section">
+        <h2>Conformance Status</h2>
+        <p>The Web Content Accessibility Guidelines (WCAG) defines requirements for designers and developers to improve accessibility for people with disabilities. It defines three levels of conformance: Level A, Level AA, and Level AAA. EyeCare AI is striving to conform to WCAG 2.1 level AA.</p>
+    </div>
+    
+    <div class="accessibility-section">
+        <h2>Feedback</h2>
+        <p>We welcome your feedback on the accessibility of EyeCare AI. Please let us know if you encounter accessibility barriers on our website:</p>
+        <ul>
+            <li>Email: <a href="mailto:accessibility@eyecareai.com">accessibility@eyecareai.com</a></li>
+            <li>Visit our <a href="{{ url_for('contact') }}">Contact page</a></li>
+        </ul>
+        <p>We try to respond to feedback within 2 business days.</p>
+    </div>
+    
+    <div class="accessibility-section">
+        <h2>Assessment and Updates</h2>
+        <p>This accessibility statement was last reviewed on {{ current_date }}.</p>
+        <p>We regularly review our website for accessibility issues and work to address any issues as quickly as possible. Our website is reviewed annually for WCAG 2.1 AA compliance.</p>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EyeCare AI{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/hero-geometric.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/api-messages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/api-client.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/x-icon">
+    {% block extra_css %}{% endblock %}
+    <style>
+        /* General styles */
+        :root {
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --text-color: #f8fafc;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --input-bg: #1e293b;
+            --input-border: #334155;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+        }
+
+        [data-theme="light"] {
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --text-color: #0f172a;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --input-bg: #ffffff;
+            --input-border: #cbd5e1;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+        }
+
+        /* Theme toggle styling */
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-left: 20px;
+        }
+
+        .theme-toggle {
+            font-size: 30px; /* Setting toggle size to 30px */
+            position: relative;
+            display: inline-block;
+            width: 1.6em;
+            height: 1em;
+            margin-left: 0.5em;
+            border-radius: 0.5em;
+            cursor: pointer;
+        }
+
+        #mobile-menu .theme-toggle-container {
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .theme-toggle__input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .theme-toggle__fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            background-color: #183153;
+            box-shadow: inset 0 0 0.5em rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        .theme-toggle__input:checked ~ .theme-toggle__fill {
+            background-color: #87CEFA;
+        }
+
+        .theme-toggle__fill .theme-toggle__icon {
+            position: absolute;
+            width: 0.8em;
+            height: 0.8em;
+            border-radius: 50%;
+            top: 0.1em;
+            transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .theme-toggle__sun-moon-container {
+            position: absolute;
+            width: 0.8em;
+            height: 0.8em;
+            border-radius: 50%;
+            top: 0.1em;
+            left: 0.1em;
+            transform: translateX(0);
+            background-color: var(--bg-color);
+            box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s;
+        }
+
+        .theme-toggle__input:checked ~ .theme-toggle__fill .theme-toggle__sun-moon-container {
+            transform: translateX(0.6em);
+            background-color: #FFDB00;
+        }
+
+        .theme-toggle__moon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.6em;
+            height: 0.6em;
+            background-color: #FFDB00;
+            border-radius: 50%;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .theme-toggle__input:checked ~ .theme-toggle__fill .theme-toggle__moon {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+        }
+
+        .theme-toggle__sun {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 0.6em;
+            height: 0.6em;
+            background-color: #FFDB00;
+            border-radius: 50%;
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .theme-toggle__input:checked ~ .theme-toggle__fill .theme-toggle__sun {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .theme-toggle__stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .theme-toggle__star {
+            position: absolute;
+            width: 0.1em;
+            height: 0.1em;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .theme-toggle__star:nth-child(1) {
+            top: 0.3em;
+            left: 0.7em;
+        }
+
+        .theme-toggle__star:nth-child(2) {
+            top: 0.2em;
+            left: 0.3em;
+        }
+
+        .theme-toggle__star:nth-child(3) {
+            top: 0.6em;
+            left: 0.5em;
+        }
+
+        .theme-toggle__input:not(:checked) ~ .theme-toggle__fill .theme-toggle__star {
+            opacity: 1;
+        }
+
+        .theme-toggle__clouds {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .theme-toggle__cloud {
+            position: absolute;
+            background-color: white;
+            border-radius: 0.4em;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .theme-toggle__cloud:nth-child(1) {
+            top: 0.2em;
+            left: 0.2em;
+            width: 0.3em;
+            height: 0.08em;
+        }
+
+        .theme-toggle__cloud:nth-child(2) {
+            top: 0.3em;
+            left: 1.1em;
+            width: 0.4em;
+            height: 0.08em;
+        }
+
+        .theme-toggle__cloud:nth-child(3) {
+            top: 0.6em;
+            left: 0.7em;
+            width: 0.3em;
+            height: 0.08em;
+        }
+
+        .theme-toggle__input:checked ~ .theme-toggle__fill .theme-toggle__cloud {
+            opacity: 1;
+        }
+
+        /* Ensure toggle appears correctly in both themes */
+        [data-theme="dark"] .theme-toggle__fill {
+            background-color: #183153;
+        }
+
+        [data-theme="light"] .theme-toggle__fill {
+            background-color: #87CEFA;
+        }
+
+        [data-theme="dark"] .theme-toggle__input:not(:checked) ~ .theme-toggle__fill .theme-toggle__sun-moon-container {
+            background-color: var(--bg-color);
+        }
+
+        [data-theme="light"] .theme-toggle__input:checked ~ .theme-toggle__fill .theme-toggle__sun-moon-container {
+            background-color: #FFDB00;
+        }
+
+        /* Flash messages styles */
+        .flash-message-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            z-index: 1000;
+        }
+        
+        .flash-message {
+            margin-bottom: 10px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            animation: slideIn 0.3s ease forwards;
+            font-weight: 500;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .flash-success {
+            background-color: rgba(46, 204, 113, 0.95);
+            color: white;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .flash-error {
+            background-color: rgba(231, 76, 60, 0.95);
+            color: white;
+            border-left: 4px solid #c0392b;
+        }
+        
+        .flash-info {
+            background-color: rgba(52, 152, 219, 0.95);
+            color: white;
+            border-left: 4px solid #2980b9;
+        }
+        
+        .flash-message .icon {
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .flash-message .close-btn {
+            margin-left: auto;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .flash-message .close-btn:hover {
+            opacity: 1;
+        }
+
+        .switch {
+            position: relative;
+            display: flex;
+            width: 70px;
+            height: 30px;
+            margin: 0 10px;
+            align-items: center;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--background-alt);
+            transition: 0.4s;
+            border-radius: 30px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        /* SVG styling for theme toggle */
+        .sun, .cloud {
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            transition: all 0.4s ease;
+        }
+
+        .sun {
+            right: 5px;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .cloud, .cloud_1 {
+            left: 5px;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        input:checked + .slider .sun {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        input:checked + .slider .cloud, 
+        input:checked + .slider .cloud_1 {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        /* Star styling */
+        .star {
+            position: absolute;
+            background-color: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            transition: all 0.4s ease;
+        }
+
+        .star_1 {
+            width: 10px;
+            height: 10px;
+            top: 5px;
+            left: 25px;
+        }
+
+        .star_2 {
+            width: 6px;
+            height: 6px;
+            top: 15px;
+            left: 13px;
+        }
+
+        .star_3 {
+            width: 8px;
+            height: 8px;
+            top: 10px;
+            left: 45px;
+        }
+
+        input:checked + .slider .star {
+            opacity: 0;
+        }
+
+        /* From Uiverse.io by Galahhad */ 
+        .theme-switch {
+            --toggle-size: 30px;
+            /* the size is adjusted using font-size,
+             this is not transform scale,
+             so you can choose any size */
+            --container-width: 5.625em;
+            --container-height: 2.5em;
+            --container-radius: 6.25em;
+            /* radius 0 - minecraft mode :) */
+            --container-light-bg: #3D7EAE;
+            --container-night-bg: #1D1F2C;
+            --circle-container-diameter: 3.375em;
+            --sun-moon-diameter: 2.125em;
+            --sun-bg: #ECCA2F;
+            --moon-bg: #C4C9D1;
+            --spot-color: #959DB1;
+            --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1);
+            --stars-color: #fff;
+            --clouds-color: #F3FDFF;
+            --back-clouds-color: #AACADF;
+            --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25);
+            --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17);
+        }
+
+        .theme-switch, .theme-switch *, .theme-switch *::before, .theme-switch *::after {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-size: var(--toggle-size);
+        }
+
+        .theme-switch__container {
+            width: var(--container-width);
+            height: var(--container-height);
+            background-color: var(--container-light-bg);
+            border-radius: var(--container-radius);
+            overflow: hidden;
+            cursor: pointer;
+            -webkit-box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25), 0em 0.062em 0.125em rgba(255, 255, 255, 0.94);
+            box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25), 0em 0.062em 0.125em rgba(255, 255, 255, 0.94);
+            -webkit-transition: var(--transition);
+            -o-transition: var(--transition);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .theme-switch__container::before {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            inset: 0;
+            -webkit-box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset, 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset;
+            box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset, 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset;
+            border-radius: var(--container-radius)
+        }
+
+        .theme-switch__checkbox {
+            display: none;
+        }
+
+        .theme-switch__circle-container {
+            width: var(--circle-container-diameter);
+            height: var(--circle-container-diameter);
+            background-color: rgba(255, 255, 255, 0.1);
+            position: absolute;
+            left: var(--circle-container-offset);
+            top: var(--circle-container-offset);
+            border-radius: var(--container-radius);
+            -webkit-box-shadow: inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), 0 0 0 0.625em rgba(255, 255, 255, 0.1), 0 0 0 1.25em rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), 0 0 0 0.625em rgba(255, 255, 255, 0.1), 0 0 0 1.25em rgba(255, 255, 255, 0.1);
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-transition: var(--circle-transition);
+            -o-transition: var(--circle-transition);
+            transition: var(--circle-transition);
+            pointer-events: none;
+        }
+
+        .theme-switch__sun-moon-container {
+            pointer-events: auto;
+            position: relative;
+            z-index: 2;
+            width: var(--sun-moon-diameter);
+            height: var(--sun-moon-diameter);
+            margin: auto;
+            border-radius: var(--container-radius);
+            background-color: var(--sun-bg);
+            -webkit-box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #a1872a inset;
+            box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #a1872a inset;
+            -webkit-filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25)) drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25));
+            filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25)) drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25));
+            overflow: hidden;
+            -webkit-transition: var(--transition);
+            -o-transition: var(--transition);
+            transition: var(--transition);
+        }
+
+        .theme-switch__moon {
+            -webkit-transform: translateX(100%);
+            -ms-transform: translateX(100%);
+            transform: translateX(100%);
+            width: 100%;
+            height: 100%;
+            background-color: var(--moon-bg);
+            border-radius: inherit;
+            -webkit-box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #969696 inset;
+            box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #969696 inset;
+            -webkit-transition: var(--transition);
+            -o-transition: var(--transition);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .theme-switch__spot {
+            position: absolute;
+            top: 0.75em;
+            left: 0.312em;
+            width: 0.75em;
+            height: 0.75em;
+            border-radius: var(--container-radius);
+            background-color: var(--spot-color);
+            -webkit-box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset;
+            box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset;
+        }
+
+        .theme-switch__spot:nth-of-type(2) {
+            width: 0.375em;
+            height: 0.375em;
+            top: 0.937em;
+            left: 1.375em;
+        }
+
+        .theme-switch__spot:nth-last-of-type(3) {
+            width: 0.25em;
+            height: 0.25em;
+            top: 0.312em;
+            left: 0.812em;
+        }
+
+        .theme-switch__clouds {
+            width: 1.25em;
+            height: 1.25em;
+            background-color: var(--clouds-color);
+            border-radius: var(--container-radius);
+            position: absolute;
+            bottom: -0.625em;
+            left: 0.312em;
+            -webkit-box-shadow: 0.937em 0.312em var(--clouds-color), -0.312em -0.312em var(--back-clouds-color), 1.437em 0.375em var(--clouds-color), 0.5em -0.125em var(--back-clouds-color), 2.187em 0 var(--clouds-color), 1.25em -0.062em var(--back-clouds-color), 2.937em 0.312em var(--clouds-color), 2em -0.312em var(--back-clouds-color), 3.625em -0.062em var(--clouds-color), 2.625em 0em var(--back-clouds-color), 4.5em -0.312em var(--clouds-color), 3.375em -0.437em var(--back-clouds-color), 4.625em -1.75em 0 0.437em var(--clouds-color), 4em -0.625em var(--back-clouds-color), 4.125em -2.125em 0 0.437em var(--back-clouds-color);
+            box-shadow: 0.937em 0.312em var(--clouds-color), -0.312em -0.312em var(--back-clouds-color), 1.437em 0.375em var(--clouds-color), 0.5em -0.125em var(--back-clouds-color), 2.187em 0 var(--clouds-color), 1.25em -0.062em var(--back-clouds-color), 2.937em 0.312em var(--clouds-color), 2em -0.312em var(--back-clouds-color), 3.625em -0.062em var(--clouds-color), 2.625em 0em var(--back-clouds-color), 4.5em -0.312em var(--clouds-color), 3.375em -0.437em var(--back-clouds-color), 4.625em -1.75em 0 0.437em var(--clouds-color), 4em -0.625em var(--back-clouds-color), 4.125em -2.125em 0 0.437em var(--back-clouds-color);
+            -webkit-transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
+            -o-transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
+            transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
+        }
+
+        .theme-switch__stars-container {
+            position: absolute;
+            color: var(--stars-color);
+            top: -100%;
+            left: 0.312em;
+            width: 2.75em;
+            height: auto;
+            -webkit-transition: var(--transition);
+            -o-transition: var(--transition);
+            transition: var(--transition);
+        }
+
+        /* actions */
+
+        .theme-switch__checkbox:checked + .theme-switch__container {
+            background-color: var(--container-night-bg);
+        }
+
+        .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container {
+            left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter));
+        }
+
+        .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container:hover {
+            left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter) - 0.187em)
+        }
+
+        .theme-switch__circle-container:hover {
+            left: calc(var(--circle-container-offset) + 0.187em);
+        }
+
+        .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__moon {
+            -webkit-transform: translate(0);
+            -ms-transform: translate(0);
+            transform: translate(0);
+        }
+
+        .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds {
+            bottom: -4.062em;
+        }
+
+        .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container {
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+        /* Dark theme override logic */
+        [data-theme="dark"] .theme-switch__checkbox:not(:checked) + .theme-switch__container {
+            background-color: var(--container-night-bg);
+        }
+
+        [data-theme="dark"] .theme-switch__checkbox:not(:checked) + .theme-switch__container .theme-switch__moon {
+            transform: translate(0);
+        }
+
+        [data-theme="dark"] .theme-switch__checkbox:not(:checked) + .theme-switch__container .theme-switch__stars-container {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        [data-theme="dark"] .theme-switch__checkbox:not(:checked) + .theme-switch__container .theme-switch__clouds {
+            bottom: -4.062em;
+        }
+
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .theme-toggle-container {
+                margin-left: 8px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-trueblack text-babypowder">
+    <!-- Particles Background -->
+    <div class="particles-container">
+        <div id="particles"></div>
+            </div>
+
+    <!-- SVG Frame Background for Light Mode -->
+    <div class="svg-frame">
+        <svg width="344" height="344" viewBox="0 0 344 344" fill="none" xmlns="http://www.w3.org/2000/svg" style="--i:0; --j:0;">
+            <path id="center1" d="M172 0C172 94.9917 94.9917 172 0 172C94.9917 172 172 249.008 172 344C172 249.008 249.008 172 344 172C249.008 172 172 94.9917 172 0Z" fill="rgba(66, 168, 245, 0.1)"/>
+        </svg>
+        <svg width="344" height="344" viewBox="0 0 344 344" fill="none" xmlns="http://www.w3.org/2000/svg" style="--i:1; --j:1;">
+            <path id="inner1" d="M172 0C172 94.9917 94.9917 172 0 172C94.9917 172 172 249.008 172 344C172 249.008 249.008 172 344 172C249.008 172 172 94.9917 172 0Z" fill="none" stroke="rgba(66, 168, 245, 0.2)" stroke-width="1"/>
+        </svg>
+        <svg width="344" height="344" viewBox="0 0 344 344" fill="none" xmlns="http://www.w3.org/2000/svg" style="--i:2; --j:2;">
+            <path id="inner3" d="M172 0C172 94.9917 94.9917 172 0 172C94.9917 172 172 249.008 172 344C172 249.008 249.008 172 344 172C249.008 172 172 94.9917 172 0Z" fill="none" stroke="rgba(66, 168, 245, 0.3)" stroke-width="1"/>
+        </svg>
+        <svg width="344" height="344" viewBox="0 0 344 344" fill="none" xmlns="http://www.w3.org/2000/svg" style="--i:3; --j:3;">
+            <path id="out3" d="M172 0C172 94.9917 94.9917 172 0 172C94.9917 172 172 249.008 172 344C172 249.008 249.008 172 344 172C249.008 172 172 94.9917 172 0Z" fill="none" stroke="rgba(66, 168, 245, 0.2)" stroke-width="1"/>
+        </svg>
+        <svg width="344" height="344" viewBox="0 0 344 344" fill="none" xmlns="http://www.w3.org/2000/svg" style="--i:4; --j:4;">
+            <path id="out2" d="M172 0C172 94.9917 94.9917 172 0 172C94.9917 172 172 249.008 172 344C172 249.008 249.008 172 344 172C249.008 172 172 94.9917 172 0Z" fill="none" stroke="rgba(66, 168, 245, 0.1)" stroke-width="1"/>
+        </svg>
+                    </div>
+
+    <!-- Second SVG Frame for top left -->
+    <div class="svg-frame top-left">
+        <svg width="344" height="344" viewBox="0 0 344 344" fill="none" xmlns="http://www.w3.org/2000/svg" style="--i:0; --j:0;">
+            <path id="center1" d="M172 0C172 94.9917 94.9917 172 0 172C94.9917 172 172 249.008 172 344C172 249.008 249.008 172 344 172C249.008 172 172 94.9917 172 0Z" fill="rgba(66, 168, 245, 0.1)"/>
+        </svg>
+        <svg width="344" height="344" viewBox="0 0 344 344" fill="none" xmlns="http://www.w3.org/2000/svg" style="--i:1; --j:1;">
+            <path id="inner1" d="M172 0C172 94.9917 94.9917 172 0 172C94.9917 172 172 249.008 172 344C172 249.008 249.008 172 344 172C249.008 172 172 94.9917 172 0Z" fill="none" stroke="rgba(66, 168, 245, 0.2)" stroke-width="1"/>
+        </svg>
+        <svg width="344" height="344" viewBox="0 0 344 344" fill="none" xmlns="http://www.w3.org/2000/svg" style="--i:2; --j:2;">
+            <path id="inner3" d="M172 0C172 94.9917 94.9917 172 0 172C94.9917 172 172 249.008 172 344C172 249.008 249.008 172 344 172C249.008 172 172 94.9917 172 0Z" fill="none" stroke="rgba(66, 168, 245, 0.3)" stroke-width="1"/>
+        </svg>
+        <svg width="344" height="344" viewBox="0 0 344 344" fill="none" xmlns="http://www.w3.org/2000/svg" style="--i:3; --j:3;">
+            <path id="out3" d="M172 0C172 94.9917 94.9917 172 0 172C94.9917 172 172 249.008 172 344C172 249.008 249.008 172 344 172C249.008 172 172 94.9917 172 0Z" fill="none" stroke="rgba(66, 168, 245, 0.2)" stroke-width="1"/>
+        </svg>
+        <svg width="344" height="344" viewBox="0 0 344 344" fill="none" xmlns="http://www.w3.org/2000/svg" style="--i:4; --j:4;">
+            <path id="out2" d="M172 0C172 94.9917 94.9917 172 0 172C94.9917 172 172 249.008 172 344C172 249.008 249.008 172 344 172C249.008 172 172 94.9917 172 0Z" fill="none" stroke="rgba(66, 168, 245, 0.1)" stroke-width="1"/>
+        </svg>
+        </div>
+
+    <!-- Flash Messages -->
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        <span class="icon">
+                            {% if category == 'success' %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            {% elif category == 'error' %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                            {% else %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            {% endif %}
+                        </span>
+                        {{ message }}
+                        <span class="close-btn" onclick="this.parentElement.style.display='none'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="main-nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <a href="{{ url_for('index') }}">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <span>EyeCare AI</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="desktop-nav">
+                    <a href="{{ url_for('index') }}" class="nav-link {% if request.path == url_for('index') %}active{% endif %}">Home</a>
+                    <a href="{{ url_for('upload_file') }}" class="nav-link {% if request.path == url_for('upload_file') %}active{% endif %}">Upload</a>
+                    {% if logged_in %}
+                    <a href="{{ url_for('results_history') }}" class="nav-link">My Results</a>
+                    {% endif %}
+                    <a href="{{ url_for('feedback') }}" class="nav-link {% if request.path == url_for('feedback') %}active{% endif %}">Feedback</a>
+                    <a href="{{ url_for('about') }}" class="nav-link {% if request.path == url_for('about') %}active{% endif %}">About</a>
+                </nav>
+
+                <div class="nav-actions">
+                    {% if logged_in %}
+                    <span class="username">{{ username }}</span>
+                    <a href="{{ url_for('logout') }}" class="btn-outline">Logout</a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="btn-outline {% if request.path == url_for('login') %}active{% endif %}">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn-primary {% if request.path == url_for('register') %}active{% endif %}">Sign Up</a>
+                    {% endif %}
+                    <div class="theme-toggle-container">
+                        <label class="theme-toggle">
+                            <input type="checkbox" class="theme-toggle__input" id="theme-toggle">
+                            <div class="theme-toggle__fill">
+                                <div class="theme-toggle__sun-moon-container">
+                                    <div class="theme-toggle__moon"></div>
+                                    <div class="theme-toggle__sun"></div>
+                                </div>
+                                <div class="theme-toggle__stars">
+                                    <div class="theme-toggle__star"></div>
+                                    <div class="theme-toggle__star"></div>
+                                    <div class="theme-toggle__star"></div>
+                                </div>
+                                <div class="theme-toggle__clouds">
+                                    <div class="theme-toggle__cloud"></div>
+                                    <div class="theme-toggle__cloud"></div>
+                                    <div class="theme-toggle__cloud"></div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="mobile-menu">
+            <div class="container">
+                <a href="{{ url_for('index') }}" class="nav-link {% if request.path == url_for('index') %}active{% endif %}">Home</a>
+                <a href="{{ url_for('upload_file') }}" class="nav-link {% if request.path == url_for('upload_file') %}active{% endif %}">Upload</a>
+                {% if logged_in %}
+                <a href="{{ url_for('results_history') }}" class="nav-link">My Results</a>
+                {% endif %}
+                <a href="{{ url_for('feedback') }}" class="nav-link {% if request.path == url_for('feedback') %}active{% endif %}">Feedback</a>
+                <a href="{{ url_for('about') }}" class="nav-link {% if request.path == url_for('about') %}active{% endif %}">About</a>
+                <div class="mobile-actions">
+                    {% if logged_in %}
+                    <span class="username">{{ username }}</span>
+                    <a href="{{ url_for('logout') }}" class="btn-outline">Logout</a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="btn-outline">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn-primary">Sign Up</a>
+                    {% endif %}
+                    <div class="theme-toggle-container">
+                        <label class="theme-toggle">
+                            <input type="checkbox" class="theme-toggle__input" id="mobile-theme-toggle">
+                            <div class="theme-toggle__fill">
+                                <div class="theme-toggle__sun-moon-container">
+                                    <div class="theme-toggle__moon"></div>
+                                    <div class="theme-toggle__sun"></div>
+                                </div>
+                                <div class="theme-toggle__stars">
+                                    <div class="theme-toggle__star"></div>
+                                    <div class="theme-toggle__star"></div>
+                                    <div class="theme-toggle__star"></div>
+                                </div>
+                                <div class="theme-toggle__clouds">
+                                    <div class="theme-toggle__cloud"></div>
+                                    <div class="theme-toggle__cloud"></div>
+                                    <div class="theme-toggle__cloud"></div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <a href="{{ url_for('index') }}" class="footer-logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <span>EyeCare AI</span>
+                    </a>
+                    <p>Advanced eye disease detection using artificial intelligence</p>
+                </div>
+                <div class="footer-links">
+                    <a href="{{ url_for('about') }}">About</a>
+                    <a href="{{ url_for('technology') }}">Technology</a>
+                    <a href="{{ url_for('privacy') }}">Privacy</a>
+                    <a href="{{ url_for('terms') }}">Terms</a>
+                    <a href="{{ url_for('contact') }}">Contact</a>
+                    <a href="{{ url_for('accessibility') }}">Accessibility</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> EyeCare AI. All rights reserved.</p>
+                <p>Made with ❤️ for better eye health</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/api.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/form-handlers.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/api-client.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set copyright year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // Theme toggle functionality
+            const htmlElement = document.documentElement;
+            const themeToggle = document.getElementById('theme-toggle');
+            const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+            
+            if (themeToggle && mobileThemeToggle) {
+                // Check for saved theme preference
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                htmlElement.setAttribute('data-theme', savedTheme);
+                
+                // Set the toggle to checked if theme is light
+                const isLightTheme = (savedTheme === 'light');
+                themeToggle.checked = isLightTheme;
+                mobileThemeToggle.checked = isLightTheme;
+                
+                // Add event listener to main toggle
+                themeToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Checked = Light mode
+                        htmlElement.setAttribute('data-theme', 'light');
+                        localStorage.setItem('theme', 'light');
+                        mobileThemeToggle.checked = true;
+                    } else {
+                        // Unchecked = Dark mode
+                        htmlElement.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        mobileThemeToggle.checked = false;
+                    }
+                });
+                
+                // Add event listener to mobile toggle
+                mobileThemeToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Checked = Light mode
+                        htmlElement.setAttribute('data-theme', 'light');
+                        localStorage.setItem('theme', 'light');
+                        themeToggle.checked = true;
+                    } else {
+                        // Unchecked = Dark mode
+                        htmlElement.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        themeToggle.checked = false;
+                    }
+                });
+            }
+            
+            // Auto-hide flash messages after 5 seconds
+            setTimeout(function() {
+                const flashMessages = document.querySelectorAll('.flash-message');
+                flashMessages.forEach(function(message) {
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateX(100%)';
+                    setTimeout(function() {
+                        message.style.display = 'none';
+                    }, 300);
+                });
+            }, 5000);
+            
+            // Also hide any alert messages
+            const alertMessages = document.querySelectorAll('.alert');
+            alertMessages.forEach(function(message) {
+                setTimeout(function() {
+                    message.classList.add('fade-out');
+                    setTimeout(function() {
+                        message.remove();
+                    }, 500);
+                }, 5000);
+            });
+
+            // Font size controls
+            const savedFontSize = localStorage.getItem('fontSize') || 'medium';
+            document.documentElement.setAttribute('data-font-size', savedFontSize);
+            
+            // Create font size controls if they don't exist
+            if (!document.querySelector('.font-size-controls')) {
+                const fontControls = document.createElement('div');
+                fontControls.className = 'font-size-controls';
+                
+                const decreaseBtn = document.createElement('button');
+                decreaseBtn.textContent = 'A-';
+                decreaseBtn.setAttribute('aria-label', 'Decrease font size');
+                
+                const fontSizeLabel = document.createElement('span');
+                fontSizeLabel.className = 'font-size-label';
+                updateFontSizeLabel(fontSizeLabel, savedFontSize);
+                
+                const increaseBtn = document.createElement('button');
+                increaseBtn.textContent = 'A+';
+                increaseBtn.setAttribute('aria-label', 'Increase font size');
+                
+                fontControls.appendChild(decreaseBtn);
+                fontControls.appendChild(fontSizeLabel);
+                fontControls.appendChild(increaseBtn);
+                
+                document.body.appendChild(fontControls);
+                
+                // Font size change handlers
+                decreaseBtn.addEventListener('click', function() {
+                    changeFontSize('decrease', fontSizeLabel);
+                });
+                
+                increaseBtn.addEventListener('click', function() {
+                    changeFontSize('increase', fontSizeLabel);
+                });
+            }
+            
+            function changeFontSize(direction, label) {
+                const sizes = ['small', 'medium', 'large', 'xl'];
+                const currentSize = document.documentElement.getAttribute('data-font-size') || 'medium';
+                let currentIndex = sizes.indexOf(currentSize);
+                
+                if (direction === 'increase' && currentIndex < sizes.length - 1) {
+                    currentIndex++;
+                } else if (direction === 'decrease' && currentIndex > 0) {
+                    currentIndex--;
+                }
+                
+                const newSize = sizes[currentIndex];
+                document.documentElement.setAttribute('data-font-size', newSize);
+                localStorage.setItem('fontSize', newSize);
+                
+                updateFontSizeLabel(label, newSize);
+            }
+            
+            function updateFontSizeLabel(label, size) {
+                const sizeMap = {
+                    'small': 'Small',
+                    'medium': 'Medium',
+                    'large': 'Large',
+                    'xl': 'Extra Large'
+                };
+                
+                label.textContent = sizeMap[size] || 'Medium';
+            }
+        });
+    </script>
+</body>
+</html>

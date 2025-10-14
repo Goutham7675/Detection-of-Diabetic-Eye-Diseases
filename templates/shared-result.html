@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+
+{% block title %}Shared Eye Detection Result - EyeCare AI{% endblock %}
+
+{% block extra_css %}
+<style>
+  .shared-result-container {
+    padding: 6rem 0;
+    background-color: var(--color-black-900);
+  }
+
+  .shared-result-card {
+    background-color: rgba(var(--color-rich-black-rgb), 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    border: 1px solid rgba(var(--color-gray-700-rgb), 0.3);
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+  }
+
+  .result-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .result-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--color-babypowder);
+  }
+
+  .result-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-gray-400);
+    max-width: 600px;
+  }
+
+  .result-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .result-image-container {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(var(--color-gray-700-rgb), 0.3);
+  }
+
+  .result-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .result-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .result-diagnosis {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-babypowder);
+  }
+
+  .result-date {
+    font-size: 0.9rem;
+    color: var(--color-gray-400);
+    margin-bottom: 1.5rem;
+  }
+
+  .confidence-container {
+    margin-bottom: 2rem;
+  }
+
+  .confidence-heading {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-gray-300);
+  }
+
+  .confidence-bar {
+    width: 100%;
+    height: 8px;
+    background-color: rgba(var(--color-gray-700-rgb), 0.3);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+  }
+
+  .confidence-fill {
+    height: 100%;
+    background-color: var(--color-primary);
+    border-radius: 4px;
+  }
+
+  .confidence-value {
+    font-size: 0.9rem;
+    color: var(--color-gray-400);
+  }
+
+  .result-info {
+    background-color: rgba(var(--color-gray-900-rgb), 0.3);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .info-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-babypowder);
+  }
+
+  .info-description {
+    color: var(--color-gray-300);
+    line-height: 1.6;
+  }
+
+  .info-description p {
+    margin-bottom: 1rem;
+  }
+
+  .info-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .disclaimer {
+    font-size: 0.85rem;
+    color: var(--color-gray-500);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .status-normal {
+    color: var(--color-success);
+  }
+
+  .status-warning {
+    color: var(--color-warning);
+  }
+
+  @media (min-width: 768px) {
+    .result-content {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="shared-result-container">
+  <div class="container">
+    <div class="shared-result-card">
+      <div class="result-header">
+        <h1 class="result-title">Eye Disease Detection Result</h1>
+        <p class="result-subtitle">This is a shared result from EyeCare AI's eye disease detection system.</p>
+      </div>
+
+      <div class="result-content">
+        <div class="result-image-container">
+          <img src="{{ url_for('static', filename=result.image_path.replace('static/', '')) }}" alt="Eye scan" class="result-image">
+        </div>
+        
+        <div class="result-details">
+          {% set status_class = "status-normal" if result.prediction|lower == "normal" else "status-warning" %}
+          <h2 class="result-diagnosis {{ status_class }}">{{ result.prediction }}</h2>
+          <p class="result-date">Scanned on {{ result.timestamp.strftime('%B %d, %Y at %I:%M %p') }}</p>
+          
+          <div class="confidence-container">
+            <h3 class="confidence-heading">Confidence Level</h3>
+            <div class="confidence-bar">
+              <div class="confidence-fill" style="width: {{ result.confidence * 100 }}%"></div>
+            </div>
+            <p class="confidence-value">{{ (result.confidence * 100)|round(1) }}% confidence in this diagnosis</p>
+          </div>
+          
+          <div class="result-info">
+            <h3 class="info-title">What does this mean?</h3>
+            <div class="info-description">
+              {% if result.prediction|lower == "normal" %}
+                <p>The scan shows a normal, healthy eye with no detected signs of common eye diseases. Regular eye check-ups are still recommended for ongoing eye health.</p>
+                <p>Remember that this is an automated screening tool and not a replacement for professional medical diagnosis.</p>
+              {% elif result.prediction|lower == "cataract" %}
+                <p>The scan shows signs consistent with cataracts, which is a clouding of the lens in the eye leading to a decrease in vision.</p>
+                <p>Cataracts often develop slowly and can affect one or both eyes. Symptoms may include faded colors, blurry vision, halos around light, trouble with bright lights, and trouble seeing at night.</p>
+              {% elif result.prediction|lower == "glaucoma" %}
+                <p>The scan shows signs consistent with glaucoma, which is a group of eye conditions that damage the optic nerve, often caused by abnormally high pressure in the eye.</p>
+                <p>Glaucoma is one of the leading causes of blindness. It can occur at any age but is more common in older adults. Many forms of glaucoma have no warning signs.</p>
+              {% elif result.prediction|lower == "dr" or result.prediction|lower == "diabetic retinopathy" %}
+                <p>The scan shows signs consistent with Diabetic Retinopathy (DR), which is a diabetes complication that affects the eyes.</p>
+                <p>It's caused by damage to the blood vessels in the retina (the light-sensitive tissue at the back of the eye). At first, diabetic retinopathy may cause no symptoms or only mild vision problems.</p>
+              {% else %}
+                <p>The scan shows signs that may require medical attention. The AI system has detected patterns consistent with eye disease.</p>
+                <p>Please consult with an eye care professional for a proper diagnosis and treatment plan.</p>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="action-buttons">
+            <a href="{{ url_for('index') }}" class="btn btn-primary">Go to EyeCare AI</a>
+            <a href="{{ url_for('about') }}" class="btn btn-outline">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <p class="disclaimer">
+      <strong>Important:</strong> This is an AI-assisted screening result and not a medical diagnosis. 
+      The results should be verified by a healthcare professional. EyeCare AI is designed to assist in 
+      early detection but is not a substitute for professional medical advice, diagnosis, or treatment.
+    </p>
+  </div>
+</section>
+{% endblock %} 

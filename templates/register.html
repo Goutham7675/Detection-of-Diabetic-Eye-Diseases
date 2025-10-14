@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Register - EyeCare AI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/auth.css') }}">
+<style>
+  /* Password requirements styling */
+  .password-requirements {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-color);
+  }
+  
+  .password-requirements p {
+    margin-bottom: 0.25rem;
+    color: var(--text-color);
+  }
+  
+  .password-requirements ul {
+    padding-left: 1.25rem;
+    margin: 0.25rem 0;
+    color: var(--text-color);
+  }
+  
+  .password-requirements li {
+    margin-bottom: 0.25rem;
+    color: var(--text-color);
+  }
+  
+  /* Light theme override */
+  [data-theme="light"] .password-requirements,
+  [data-theme="light"] .password-requirements p,
+  [data-theme="light"] .password-requirements ul,
+  [data-theme="light"] .password-requirements li {
+    color: #333;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="auth-page">
+  <div class="container">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <h1>Create Account</h1>
+          <p>Join the community for early eye disease detection</p>
+        </div>
+
+        <form id="register-form" class="auth-form" action="{{ url_for('register') }}" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first-name">First Name</label>
+              <div class="input-container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <input type="text" id="first-name" name="first-name" placeholder="Enter first name" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="last-name">Last Name</label>
+              <div class="input-container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <input type="text" id="last-name" name="last-name" placeholder="Enter last name" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-container">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-container">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <input type="password" id="password" name="password" placeholder="Create a password" required>
+            </div>
+            <div class="password-requirements">
+              <p>Password must contain at least 8 characters, including:</p>
+              <ul>
+                <li>One uppercase letter</li>
+                <li>One lowercase letter</li>
+                <li>One number</li>
+                <li>One special character</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <div class="input-container">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+            </div>
+          </div>
+
+          <div class="terms-privacy">
+            <label class="checkbox-container">
+              <input type="checkbox" id="terms" name="terms" required>
+              <span class="checkmark"></span>
+              <span class="label-text">I agree to the <a href="{{ url_for('terms') }}">Terms of Service</a> and <a href="{{ url_for('privacy') }}">Privacy Policy</a></span>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Create Account</button>
+          </div>
+          
+          <div class="form-footer">
+            <p>Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %} 

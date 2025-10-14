@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EyeCare AI - Advanced Eye Disease Detection</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/index.css">
+  <link rel="stylesheet" href="styles/hero-geometric.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body class="bg-trueblack text-babypowder">
+  <!-- Particles Background -->
+  <div class="particles-container">
+    <div id="particles"></div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header class="main-nav">
+    <div class="container">
+      <div class="nav-content">
+        <div class="logo">
+          <a href="index.html">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>EyeCare AI</span>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+          <a href="index.html" class="nav-link active">Home</a>
+          <a href="upload.html" class="nav-link">Upload</a>
+          <a href="feedback.html" class="nav-link">Feedback</a>
+          <a href="about.html" class="nav-link">About</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="login.html" class="btn-outline">Login</a>
+          <a href="register.html" class="btn-primary">Sign Up</a>
+          <div class="theme-toggle-container">
+            <input type="checkbox" id="toggle" class="theme-toggle">
+            <label for="toggle" class="toggle-label">
+              <span class="toggle-icon light-icon">☀️</span>
+              <span class="toggle-icon dark-icon">🌙</span>
+            </label>
+          </div>
+          <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="container">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="upload.html" class="nav-link">Upload</a>
+        <a href="feedback.html" class="nav-link">Feedback</a>
+        <a href="about.html" class="nav-link">About</a>
+        <div class="mobile-actions">
+          <a href="login.html" class="btn-outline">Login</a>
+          <a href="register.html" class="btn-primary">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- AI Technology Badge - Moved Below Nav -->
+  <div class="ai-tech-badge">
+    <div class="container">
+      <div class="badge-content">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        <br> </br>
+        <span>AI-Powered Technology</span>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <br> </br>
+          <br> </br>
+          
+          <h1 class="animate-slide-up">
+            Early Detection of Eye Diseases with AI
+          </h1>
+          <p class="hero-subtitle animate-slide-up">Our advanced AI system analyzes retinal images to detect signs of diabetic retinopathy, glaucoma, macular degeneration, and other eye conditions with high accuracy.</p>
+          <div class="hero-actions animate-slide-up">
+            <a href="upload.html" class="btn-primary">Try It Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-bg">
+        <div id="hero-particles"></div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Why Choose Our Platform?</h2>
+          <p>Our advanced AI technology provides accurate and reliable eye disease detection</p>
+        </div>
+        
+        <div class="features-grid">
+          <div class="feature-card" data-delay="0.1s">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </div>
+            <h3>Multiple Disease Detection</h3>
+            <p>Detect various eye conditions including DR, DME, and other related diseases.</p>
+          </div>
+          
+          <div class="feature-card" data-delay="0.2s">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" x2="12" y1="3" y2="15"></line></svg>
+            </div>
+            <h3>Quick Detection</h3>
+            <p>Get instant results using our advanced AI model trained on thousands of retinal images.</p>
+          </div>
+          
+          <div class="feature-card" data-delay="0.3s">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path><path d="m6 14 6-2 6 2"></path></svg>
+            </div>
+            <h3>Accurate Results</h3>
+            <p>High accuracy rates backed by extensive research and validation.</p>
+          </div>
+          
+          <div class="feature-card" data-delay="0.4s">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.08V8l-6-6H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h6"></path><path d="M14 3v5h5M17.5 20a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"></path><path d="M20 17.5v2a.5.5 0 0 1-.5.5h-2"></path><path d="M14.5 15H14a2 2 0 0 0-2 2v0a2 2 0 0 0 2 2h.5"></path><path d="M15 15v6"></path></svg>
+            </div>
+            <h3>Secure & Private</h3>
+            <p>Your data is encrypted and protected with industry-standard security measures.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>How It Works</h2>
+          <p>Our platform makes it easy to detect eye diseases in just a few simple steps</p>
+        </div>
+        
+        <div class="steps-grid horizontal-steps">
+          <div class="step-item" data-delay="0.1s">
+            <div class="step-number">1</div>
+            <h3>Create Account</h3>
+            <p>Sign up for a free account to access our services.</p>
+          </div>
+          
+          <div class="step-item" data-delay="0.2s">
+            <div class="step-number">2</div>
+            <h3>Upload Image</h3>
+            <p>Upload your retinal image in supported formats.</p>
+          </div>
+          
+          <div class="step-item" data-delay="0.3s">
+            <div class="step-number">3</div>
+            <h3>AI Analysis</h3>
+            <p>Our AI model analyzes your image for diseases.</p>
+          </div>
+          
+          <div class="step-item" data-delay="0.4s">
+            <div class="step-number">4</div>
+            <h3>Get Results</h3>
+            <p>Receive detailed results and recommendations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Get Started?</h2>
+          <p>Join thousands of users who trust our platform for early eye disease detection</p>
+          <div class="cta-buttons horizontal-buttons">
+            <a href="register.html" class="btn-primary">Create Account</a>
+            <a href="upload.html" class="btn-outline">Upload Image</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <a href="index.html" class="footer-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>EyeCare AI</span>
+          </a>
+          <p>Advanced eye disease detection using artificial intelligence</p>
+        </div>
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <a href="technology.html">Technology</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> EyeCare AI. All rights reserved.</p>
+        <p>Made with ❤️ for better eye health</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/particles.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    
+    // Theme toggle functionality
+    const htmlElement = document.documentElement;
+    const themeToggle = document.getElementById('toggle');
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    
+    // Set the toggle to checked if theme is light
+    if (savedTheme === 'light') {
+      themeToggle.checked = true;
+    }
+    
+    // Add event listener to toggle
+    themeToggle.addEventListener('change', function() {
+      if (this.checked) {
+        htmlElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html> 

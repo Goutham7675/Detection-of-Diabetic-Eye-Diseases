@@ -1,0 +1,121 @@
+/**
+ * API Client CSS
+ * Styles for the API client toast notifications
+ */
+
+/* Toast Notifications */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 0;
+  z-index: 10000;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+  max-width: 350px;
+  min-width: 250px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateY(0);
+  opacity: 1;
+  background-color: var(--color-rich-black);
+  border-left: 4px solid var(--color-primary);
+  overflow: hidden;
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+}
+
+.toast-info {
+  border-left-color: var(--color-info, #3498db);
+}
+
+.toast-success {
+  border-left-color: var(--color-success, #2ecc71);
+}
+
+.toast-error {
+  border-left-color: var(--color-danger, #e74c3c);
+}
+
+.toast-warning {
+  border-left-color: var(--color-warning, #f39c12);
+}
+
+.toast-hiding {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+  opacity: 0.7;
+  color: var(--color-gray-300);
+  transition: opacity 0.2s ease;
+}
+
+.toast-close:hover {
+  opacity: 1;
+}
+
+/* Multiple Toasts Positioning */
+.toast:nth-child(1) {
+  bottom: 20px;
+}
+
+.toast:nth-child(2) {
+  bottom: 90px;
+}
+
+.toast:nth-child(3) {
+  bottom: 160px;
+}
+
+.toast:nth-child(4) {
+  bottom: 230px;
+}
+
+/* Loading Indicator */
+.api-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(var(--color-primary-rgb), 0.2);
+  border-radius: 50%;
+  border-top-color: var(--color-primary);
+  animation: api-spin 0.8s linear infinite;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+@keyframes api-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Disabled Button State */
+.btn-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.btn-loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: calc(50% - 8px);
+  right: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: api-spin 0.8s linear infinite;
+} 

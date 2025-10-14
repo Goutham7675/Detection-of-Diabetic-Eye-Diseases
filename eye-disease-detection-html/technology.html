@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Technology - EyeCare AI</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/hero-geometric.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    .tech-page {
+      padding: 6rem 0;
+      background-color: var(--color-black-900);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tech-page::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top right, rgba(var(--color-primary-rgb), 0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .tech-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .tech-section {
+      margin-bottom: 5rem;
+    }
+
+    .tech-card {
+      background-color: rgba(var(--color-rich-black-rgb), 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      border: 1px solid rgba(var(--color-gray-700-rgb), 0.3);
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      margin-bottom: 3rem;
+    }
+
+    .tech-title {
+      font-size: 2rem;
+      color: var(--color-babypowder);
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--color-primary), var(--color-blue-400));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tech-subtitle {
+      font-size: 1.25rem;
+      color: var(--color-primary);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .tech-content {
+      color: var(--color-gray-300);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .tech-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .tech-feature {
+      background-color: rgba(var(--color-black-900-rgb), 0.7);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(var(--color-gray-700-rgb), 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .tech-feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .tech-feature-icon {
+      width: 3.5rem;
+      height: 3.5rem;
+      background-color: rgba(var(--color-primary-rgb), 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      border: 1px solid rgba(var(--color-primary-rgb), 0.2);
+    }
+
+    .tech-feature-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--color-babypowder);
+    }
+
+    .tech-feature-content {
+      color: var(--color-gray-300);
+      line-height: 1.6;
+    }
+
+    .tech-image-container {
+      border-radius: 0.75rem;
+      overflow: hidden;
+      margin: 2rem 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(var(--color-primary-rgb), 0.2);
+    }
+
+    .tech-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .tech-accuracy {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .accuracy-card {
+      background: linear-gradient(135deg, rgba(var(--color-primary-rgb), 0.1), rgba(var(--color-blue-400-rgb), 0.1));
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(var(--color-primary-rgb), 0.2);
+    }
+
+    .accuracy-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .accuracy-label {
+      color: var(--color-gray-300);
+      font-size: 0.9rem;
+    }
+
+    /* Media Queries */
+    @media (min-width: 640px) {
+      .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tech-accuracy {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 768px) {
+      .tech-accuracy {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .tech-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body class="bg-trueblack text-babypowder">
+  <!-- Particles Background -->
+  <div class="particles-container">
+    <div id="particles"></div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header class="main-nav">
+    <div class="container">
+      <div class="nav-content">
+        <div class="logo">
+          <a href="index.html">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>EyeCare AI</span>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="upload.html" class="nav-link">Upload</a>
+          <a href="feedback.html" class="nav-link">Feedback</a>
+          <a href="about.html" class="nav-link">About</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="login.html" class="btn-outline">Login</a>
+          <a href="register.html" class="btn-primary">Sign Up</a>
+          <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="container">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="upload.html" class="nav-link">Upload</a>
+        <a href="feedback.html" class="nav-link">Feedback</a>
+        <a href="about.html" class="nav-link">About</a>
+        <div class="mobile-actions">
+          <a href="login.html" class="btn-outline">Login</a>
+          <a href="register.html" class="btn-primary">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-geometric mini">
+      <!-- Geometric Shapes Background -->
+      <div class="geometric-background">
+        <div class="geometric-shape shape-1"></div>
+        <div class="geometric-shape shape-2"></div>
+        <div class="geometric-shape shape-3"></div>
+        <div class="geometric-shape shape-4"></div>
+        <div class="grid-overlay"></div>
+      </div>
+
+      <div class="hero-content-wrapper">
+        <div class="hero-badge">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span>Innovation</span>
+        </div>
+
+        <h1 class="hero-title">Our Technology</h1>
+        
+        <p class="hero-subtitle">
+          Advancing eye health through cutting-edge AI and computer vision
+        </p>
+      </div>
+    </section>
+
+    <section class="tech-page">
+      <div class="tech-container">
+        <!-- Overview Section -->
+        <div class="tech-section">
+          <div class="tech-card">
+            <h2 class="tech-title">AI-Powered Eye Disease Detection</h2>
+            <div class="tech-content">
+              <p>
+                EyeCare AI utilizes advanced deep learning algorithms to analyze retinal images and detect signs of various eye diseases at their earliest stages. Our technology is designed to provide accurate, accessible screening that can help identify conditions before they cause irreversible vision loss.
+              </p>
+              <p>
+                By leveraging convolutional neural networks (CNNs) trained on millions of eye images, our system can identify subtle patterns and biomarkers that might be missed in routine examinations. This allows for earlier intervention and treatment, potentially saving sight for millions of people around the world.
+              </p>
+            </div>
+
+            <div class="tech-image-container">
+              <img src="https://images.unsplash.com/photo-1580130732478-4e339fb6836f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Advanced retinal imaging technology" class="tech-image">
+            </div>
+
+            <div class="tech-accuracy">
+              <div class="accuracy-card">
+                <div class="accuracy-number">95%</div>
+                <div class="accuracy-label">Accuracy in Diabetic Retinopathy Detection</div>
+              </div>
+              <div class="accuracy-card">
+                <div class="accuracy-number">94%</div>
+                <div class="accuracy-label">Accuracy in AMD Detection</div>
+              </div>
+              <div class="accuracy-card">
+                <div class="accuracy-number">92%</div>
+                <div class="accuracy-label">Accuracy in Glaucoma Detection</div>
+              </div>
+              <div class="accuracy-card">
+                <div class="accuracy-number">90%</div>
+                <div class="accuracy-label">Accuracy in Other Eye Conditions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="tech-section">
+          <h2 class="tech-title">How Our Technology Works</h2>
+          <h3 class="tech-subtitle">Advanced AI Models for Accurate Diagnosis</h3>
+          
+          <div class="tech-grid">
+            <div class="tech-feature">
+              <div class="tech-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              </div>
+              <h4 class="tech-feature-title">Image Acquisition</h4>
+              <div class="tech-feature-content">
+                <p>Users upload high-quality retinal images through our secure platform. Our system accepts various image formats and automatically enhances image quality for optimal analysis.</p>
+              </div>
+            </div>
+
+            <div class="tech-feature">
+              <div class="tech-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
+              </div>
+              <h4 class="tech-feature-title">Preprocessing</h4>
+              <div class="tech-feature-content">
+                <p>Our algorithms normalize, segment, and enhance the images to standardize them and highlight relevant features for the neural network, improving detection accuracy.</p>
+              </div>
+            </div>
+
+            <div class="tech-feature">
+              <div class="tech-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4"></path><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+              </div>
+              <h4 class="tech-feature-title">AI Analysis</h4>
+              <div class="tech-feature-content">
+                <p>Our deep learning models analyze the images, identifying patterns associated with various eye conditions by comparing against our extensive training database of annotated images.</p>
+              </div>
+            </div>
+
+            <div class="tech-feature">
+              <div class="tech-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>
+              </div>
+              <h4 class="tech-feature-title">Feature Detection</h4>
+              <div class="tech-feature-content">
+                <p>Our system identifies key biomarkers and anatomical features associated with specific eye diseases, such as microaneurysms, hemorrhages, and drusen deposits.</p>
+              </div>
+            </div>
+
+            <div class="tech-feature">
+              <div class="tech-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              </div>
+              <h4 class="tech-feature-title">Risk Assessment</h4>
+              <div class="tech-feature-content">
+                <p>Based on the detected features, our AI calculates the probability of various eye conditions and classifies the severity level when applicable.</p>
+              </div>
+            </div>
+
+            <div class="tech-feature">
+              <div class="tech-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+              </div>
+              <h4 class="tech-feature-title">Result Generation</h4>
+              <div class="tech-feature-content">
+                <p>Our system generates comprehensive reports with visual indicators of detected abnormalities, risk assessments, and recommended follow-up actions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advantages Section -->
+        <div class="tech-section">
+          <div class="tech-card">
+            <h2 class="tech-title">Advantages of Our Technology</h2>
+            <div class="tech-content">
+              <p>
+                EyeCare AI represents a significant advancement in early detection and screening for eye diseases. Our technology offers several key advantages:
+              </p>
+              
+              <h3 class="tech-subtitle">Early Detection</h3>
+              <p>
+                Our AI can identify subtle changes in the retina that may indicate disease before symptoms appear, enabling earlier intervention and better outcomes.
+              </p>
+              
+              <h3 class="tech-subtitle">Accessibility</h3>
+              <p>
+                By providing a digital screening solution, we make eye disease detection available to people who may not have easy access to specialist care, particularly in underserved areas.
+              </p>
+              
+              <h3 class="tech-subtitle">Consistency</h3>
+              <p>
+                Our AI provides consistent analysis that doesn't vary with fatigue or experience, unlike human assessments which can vary between practitioners.
+              </p>
+              
+              <h3 class="tech-subtitle">Scalability</h3>
+              <p>
+                Our platform can analyze thousands of images daily, helping to address the growing demand for eye care services worldwide as populations age and conditions like diabetes become more prevalent.
+              </p>
+              
+              <h3 class="tech-subtitle">Continuous Improvement</h3>
+              <p>
+                Our AI models are continuously trained on new data, allowing them to improve over time and adapt to diverse populations and imaging conditions.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="tech-section">
+          <div class="tech-card" style="text-align: center;">
+            <h2 class="tech-title">Experience Our Technology</h2>
+            <div class="tech-content">
+              <p>
+                Ready to see how our AI can help detect eye diseases early? Upload your retinal image today for a quick, secure analysis.
+              </p>
+              <div style="margin-top: 2rem;">
+                <a href="upload.html" class="btn-primary" style="padding: 0.875rem 2rem; font-size: 1.1rem;">Try Our Technology</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <a href="index.html" class="footer-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>EyeCare AI</span>
+          </a>
+          <p>Advanced eye disease detection using artificial intelligence</p>
+        </div>
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <a href="technology.html">Technology</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> EyeCare AI. All rights reserved.</p>
+        <p>Made with ❤️ for better eye health</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/particles.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html> 

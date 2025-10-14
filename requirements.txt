@@ -1,0 +1,7 @@
+Flask==3.0.2
+Flask-SQLAlchemy==3.1.1
+Werkzeug==3.0.1
+Pillow==10.2.0
+numpy==1.26.4
+FPDF==1.7.2
+reportlab==4.1.0

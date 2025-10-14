@@ -1,0 +1,74 @@
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-info">
+        <a href="{{ url_for('index') }}" class="footer-logo">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <span>EyeCare AI</span>
+        </a>
+        <p>Advanced eye disease detection using artificial intelligence</p>
+      </div>
+      
+      <div class="footer-links">
+        <div class="footer-section">
+          <h3>Navigation</h3>
+          <a href="{{ url_for('index') }}">Home</a>
+          <a href="{{ url_for('upload_file') }}">Upload</a>
+          <a href="{{ url_for('feedback') }}">Feedback</a>
+          <a href="{{ url_for('about') }}">About</a>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <a href="{{ url_for('privacy') }}">Privacy Policy</a>
+          <a href="{{ url_for('terms') }}">Terms of Service</a>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <a href="{{ url_for('contact') }}">Contact Us</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; <span id="current-year"></span> EyeCare AI. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script>
+  // Mobile menu toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu functionality
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    if (mobileMenuToggle) {
+      mobileMenuToggle.addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.toggle('active');
+      });
+    }
+    // Theme toggle
+    const toggle = document.getElementById('toggle');
+    if (toggle) {
+      const html = document.documentElement;
+      if (localStorage.getItem('theme') === 'light') {
+        html.setAttribute('data-theme', 'light');
+        toggle.checked = true;
+      }
+      toggle.addEventListener('change', function() {
+        if (this.checked) {
+          html.setAttribute('data-theme', 'light');
+          localStorage.setItem('theme', 'light');
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    }
+    // Set current year
+    const currentYearSpan = document.getElementById('current-year');
+    if (currentYearSpan) {
+      currentYearSpan.textContent = new Date().getFullYear();
+    }
+  });
+</script> 

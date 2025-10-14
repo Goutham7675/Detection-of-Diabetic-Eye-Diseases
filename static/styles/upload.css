@@ -1,0 +1,394 @@
+/* Upload Page Styles */
+
+/* Layout */
+.upload-page {
+  padding: 3rem 0;
+}
+
+.upload-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.page-header p {
+  color: rgba(250, 247, 237, 0.7);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Sidebar */
+.upload-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.upload-sidebar .glass-card {
+  padding: 1.5rem;
+}
+
+.upload-sidebar h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-babypowder);
+}
+
+/* Guidelines List */
+.guidelines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.guideline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.guideline-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: rgba(12, 98, 145, 0.1);
+  color: var(--color-lapis-400);
+  flex-shrink: 0;
+}
+
+.guideline-content {
+  flex: 1;
+}
+
+.guideline-content h4 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: var(--color-babypowder);
+}
+
+.guideline-content p {
+  font-size: 0.875rem;
+  color: rgba(250, 247, 237, 0.7);
+}
+
+/* Steps List */
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: rgba(12, 98, 145, 0.2);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-lapis-300);
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content h4 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: var(--color-babypowder);
+}
+
+.step-content p {
+  font-size: 0.875rem;
+  color: rgba(250, 247, 237, 0.7);
+}
+
+/* Upload Content */
+.upload-content {
+  width: 100%;
+}
+
+.upload-card {
+  margin-bottom: 2rem;
+}
+
+/* Tabs - Update to hide tabs but keep tab content visible */
+.tabs {
+  display: none; /* Hide the tabs section */
+}
+
+.tab-button {
+  display: none; /* Hide tab buttons */
+}
+
+.tab-content {
+  position: relative;
+}
+
+.tab-pane {
+  display: block; /* Always show the tab pane */
+}
+
+/* File Upload Area */
+.file-upload-container {
+  position: relative;
+}
+
+.file-uploader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem 2rem;
+  border: 2px dashed rgba(12, 98, 145, 0.3);
+  border-radius: 0.75rem;
+  background: rgba(12, 98, 145, 0.05);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-uploader:hover {
+  background: rgba(12, 98, 145, 0.1);
+  border-color: rgba(12, 98, 145, 0.4);
+}
+
+.upload-icon {
+  color: var(--color-lapis-400);
+  margin-bottom: 1rem;
+}
+
+.file-types {
+  font-size: 0.875rem;
+  color: rgba(250, 247, 237, 0.5);
+}
+
+.file-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* File Preview - Add reset button style */
+.reset-file {
+  background-color: transparent;
+  border: 1px solid rgba(250, 247, 237, 0.2);
+  color: var(--color-babypowder);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-file:hover {
+  background-color: rgba(250, 247, 237, 0.1);
+  border-color: rgba(250, 247, 237, 0.3);
+}
+
+/* Add highlight class for drag and drop */
+.file-uploader.highlight {
+  background: rgba(12, 98, 145, 0.15);
+  border-color: rgba(12, 98, 145, 0.5);
+}
+
+/* File Preview */
+.file-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem 2rem;
+  border: 2px solid rgba(12, 98, 145, 0.3);
+  border-radius: 0.75rem;
+  background: rgba(12, 98, 145, 0.1);
+  text-align: center;
+}
+
+.preview-icon {
+  color: var(--color-lapis-400);
+  margin-bottom: 1rem;
+}
+
+.file-size {
+  font-size: 0.875rem;
+  color: rgba(250, 247, 237, 0.5);
+}
+
+/* Analyzing Overlay */
+.analyzing-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(17, 24, 39, 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem;
+  z-index: 10;
+}
+
+.analyzing-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.analyzing-content p {
+  color: var(--color-babypowder);
+  font-weight: 500;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.analyze-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+}
+
+.analyze-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Remove camera placeholder styles as they're no longer needed */
+.camera-placeholder {
+  display: none;
+}
+
+/* Note Card */
+.note-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.note-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgba(235, 160, 41, 0.1);
+  color: var(--color-yellow-400);
+  flex-shrink: 0;
+}
+
+.note-content {
+  flex: 1;
+}
+
+.note-content h4 {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-babypowder);
+}
+
+.note-content p {
+  font-size: 0.9375rem;
+  color: rgba(250, 247, 237, 0.7);
+}
+
+/* Error Message */
+.error-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.error-message svg {
+  color: #ef4444;
+  flex-shrink: 0;
+}
+
+.error-content {
+  flex: 1;
+}
+
+.error-content h4 {
+  font-size: 1.125rem;
+  margin-bottom: 0.25rem;
+  color: var(--color-babypowder);
+}
+
+.error-content p {
+  font-size: 0.9375rem;
+  color: rgba(250, 247, 237, 0.7);
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+  .upload-layout {
+    grid-template-columns: 1fr 2fr;
+  }
+  
+  .page-header {
+    text-align: left;
+  }
+  
+  .page-header h1 {
+    font-size: 2.25rem;
+  }
+  
+  .page-header p {
+    margin: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .upload-sidebar {
+    position: sticky;
+    top: 2rem;
+  }
+} 
