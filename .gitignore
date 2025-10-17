@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Instance folder (contains SQLite database)
+instance/
+
+# Uploaded files (optional to ignore in repo)
+static/uploads/
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# dotenv environment variables
+.env
+.env.*
+
+# pip cache
+pip-log.txt
+
+# Jupyter
+.ipynb_checkpoints/
+
+# local files
+/local_settings.py
+
+# SQLite database
+*.db
